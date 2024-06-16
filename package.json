@@ -1,0 +1,19 @@
+{
+  "name": "minimal-tracing",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node --env-file .env index.js",
+    "test": "node tracer_test.js",
+    "test:watch": "node --watch tracer_test.js"
+  },
+  "type": "module",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@hono/node-server": "^1.12.0",
+    "hono": "^4.5.2"
+  }
+}
