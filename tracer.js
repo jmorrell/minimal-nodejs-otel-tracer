@@ -10,8 +10,6 @@ class Tracing {
 
   static exporter = (span) => {};
 
-  static createContext = (traceID, spanID) => ({ traceID, spanID });
-
   static getCurrentSpan = () => Tracing.asyncLocalStorage.getStore().span;
 
   static getContext = () => Tracing.asyncLocalStorage.getStore();
@@ -54,7 +52,7 @@ class Span {
   }
 
   end() {
-    this.elapsedMs = performance.now() - this.startTimestampMs;
+    this.durationMs = performance.now() - this.startTimestampMs;
   }
 }
 
@@ -155,7 +153,7 @@ function spanToOTLP(span) {
                 name: span.name,
                 startTimeUnixNano: span.startTime * Math.pow(10, 6),
                 endTimeUnixNano:
-                  (span.startTime + span.elapsedMs) * Math.pow(10, 6),
+                  (span.startTime + span.durationMs) * Math.pow(10, 6),
                 kind: 2,
                 attributes: toAttributes(Object.fromEntries(span.attributes)),
               },
@@ -169,7 +167,6 @@ function spanToOTLP(span) {
 
 function otlpExporter(url, headers) {
   return function (span) {
-    console.log(JSON.stringify(spanToOTLP(span), null, 2));
     fetch(url, {
       method: "POST",
       headers: {

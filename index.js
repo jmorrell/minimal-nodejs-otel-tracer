@@ -5,9 +5,20 @@ import honeycombExporter from "./honeycomb-exporter.js";
 
 Tracing.name = "demo-app";
 Tracing.globalAttributes = new Map([["service.name", "demo-app"]]);
+
+// export to Honeycomb
 Tracing.exporter = otlpExporter("https://api.honeycomb.io/v1/traces", {
   "X-Honeycomb-Team": process.env.HONEYCOMB_API_KEY,
 });
+
+// export to Baselime
+// Tracing.exporter = otlpExporter("https://otel.baselime.io/v1/traces", {
+//   "x-api-key": process.env.BASELIME_API_KEY,
+//   "X-baselime-dataset": "blogpost",
+// });
+
+// Export to local tool, otel-desktop-viewer or otel-tui
+// Tracing.exporter = otlpExporter("http://localhost:4318/v1/traces", {});
 
 let app = new Hono();
 
