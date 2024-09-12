@@ -3,10 +3,13 @@ import { Hono } from "hono";
 import { Tracing, honoMiddleware, patchFetch, otlpExporter } from "./tracer.js";
 import honeycombExporter from "./honeycomb-exporter.js";
 
-Tracing.name = "demo-app";
-Tracing.globalAttributes = new Map([["service.name", "demo-app"]]);
+Tracing.name = "test-app";
+Tracing.globalAttributes = new Map([["service.name", "test-app"]]);
 
-// export to Honeycomb
+// Export using Honeycomb's events API
+// Tracing.exporter = honeycombExporter(process.env.HONEYCOMB_API_KEY);
+
+// OTLP export to Honeycomb
 Tracing.exporter = otlpExporter("https://api.honeycomb.io/v1/traces", {
   "X-Honeycomb-Team": process.env.HONEYCOMB_API_KEY,
 });

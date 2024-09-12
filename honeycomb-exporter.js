@@ -9,7 +9,7 @@ function spanToHoneycombJSON(span) {
     span_id: span.spanID,
     parent_span_id: span.parentSpanID,
     start_time: span.startTime,
-    elapsed_ms: span.elapsedMs,
+    duration_ms: span.durationMs,
   };
 }
 
